@@ -58,24 +58,29 @@ def limpar_input_data(driver, xpath):
 def preencher_formulario(driver, dados):
     limpar_todos_inputs(driver)
     # 1. First Name
-    WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.NAME, 'firstName'))).clear()
-    driver.find_element(By.NAME, 'firstName').send_keys(dados['firstName'])
+    campo_firstname = driver.find_element(By.NAME, 'firstName')
+    limpar_input_totalmente(campo_firstname)
+    campo_firstname.send_keys(dados['firstName'])
     # 2. Middle Name
-    driver.find_element(By.NAME, 'middleName').clear()
-    driver.find_element(By.NAME, 'middleName').send_keys(dados['middleName'])
+    campo_middlename = driver.find_element(By.NAME, 'middleName')
+    limpar_input_totalmente(campo_middlename)
+    campo_middlename.send_keys(dados['middleName'])
     # 3. Last Name
-    driver.find_element(By.NAME, 'lastName').clear()
-    driver.find_element(By.NAME, 'lastName').send_keys(dados['lastName'])
+    campo_lastname = driver.find_element(By.NAME, 'lastName')
+    limpar_input_totalmente(campo_lastname)
+    campo_lastname.send_keys(dados['lastName'])
     # 4. Employee Id
     campo_employee_id = driver.find_element(By.XPATH, '//label[text()="Employee Id"]/../following-sibling::div/input')
     limpar_input_totalmente(campo_employee_id)
     campo_employee_id.send_keys(dados['employeeId'])
     # 5. Other Id
-    driver.find_element(By.XPATH, '//label[text()="Other Id"]/../following-sibling::div/input').clear()
-    driver.find_element(By.XPATH, '//label[text()="Other Id"]/../following-sibling::div/input').send_keys(dados['otherId'])
+    campo_otherid = driver.find_element(By.XPATH, '//label[text()="Other Id"]/../following-sibling::div/input')
+    limpar_input_totalmente(campo_otherid)
+    campo_otherid.send_keys(dados['otherId'])
     # 6. Driver's License Number
-    driver.find_element(By.XPATH, '//label[text()="Driver\'s License Number"]/../following-sibling::div/input').clear()
-    driver.find_element(By.XPATH, '//label[text()="Driver\'s License Number"]/../following-sibling::div/input').send_keys(dados['licenseNumber'])
+    campo_license = driver.find_element(By.XPATH, '//label[text()="Driver\'s License Number"]/../following-sibling::div/input')
+    limpar_input_totalmente(campo_license)
+    campo_license.send_keys(dados['licenseNumber'])
     # 7. License Expiry Date
     input_expiry = limpar_input_data(driver, '//label[contains(text(),"License Expiry Date")]/../following-sibling::div//input')
     input_expiry.send_keys(dados['licenseExpiry'])
