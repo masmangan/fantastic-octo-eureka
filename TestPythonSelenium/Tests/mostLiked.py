@@ -18,7 +18,7 @@ def mostLiked():
   most_liked = wait.until(EC.element_to_be_clickable((By.XPATH, "//button[contains(., 'Most Liked Posts')]")))
   most_liked.click()
 
-  time.sleep(3)
+  time.sleep(25)
 
   return driver
   
