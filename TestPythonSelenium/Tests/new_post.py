@@ -26,7 +26,7 @@ def new_post(content):
 if __name__ == "__main__":
     driver = None
     try:
-        driver = new_post("oi.")
+        driver = new_post("Testing new post.")
         print("New Post test passed.")
     except TimeoutException:
         print("New Post test failed: Timeout while waiting for elements.")
