@@ -15,7 +15,6 @@ public class Seleniumscript {
 
 		try {
 			driver.get("https://opensource-demo.orangehrmlive.com/web/index.php/auth/login");
-			// driver.manage().window().maximize();
 
 			WebElement usernameField = wait.until(
 					ExpectedConditions.visibilityOfElementLocated(By.cssSelector("input[placeholder='Username']")));
@@ -129,8 +128,6 @@ public class Seleniumscript {
 	private static void clickCss(WebDriver driver, WebDriverWait wait,String cssSelector, String click) {
 		System.out.println("clickCss: "+click);
 		WebElement button = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(cssSelector)));
-		//wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(cssSelector)));
-		//WebElement loginButton = driver.findElement(By.cssSelector(cssSelector));
 		button.click();
 	}
 
@@ -157,7 +154,7 @@ public class Seleniumscript {
 	}
 
 	public static void main(String[] args) {
-		System.setProperty("webdriver.chrome.driver", "C:\\Users\\viniw\\Downloads\\chromedriver-win64\\chromedriver-win64\\chromedriver.exe");
+		System.setProperty("webdriver.chrome.driver", "D:\\apps\\Selenium\\chromedriver\\chromedriver.exe");
 		WebDriver driver = new ChromeDriver();
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
 
