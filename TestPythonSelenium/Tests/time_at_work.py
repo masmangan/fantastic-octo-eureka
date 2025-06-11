@@ -12,8 +12,6 @@ def time_at_work(noteIn, noteOut):
     driver.find_element(By.CSS_SELECTOR, ".oxd-icon-button.oxd-icon-button--solid-main.orangehrm-attendance-card-action").click()
     time.sleep(5)
 
-    WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.CSS_SELECTOR, '.oxd-icon.bi-clock.oxd-time-input--clock'))).click()
-
     textarea_field = WebDriverWait(driver, 10).until(
         EC.visibility_of_element_located((By.CSS_SELECTOR, '.oxd-textarea.oxd-textarea--active.oxd-textarea--resize-vertical'))
     )

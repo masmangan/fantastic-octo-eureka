@@ -8,7 +8,6 @@ import time
 def new_post(content):
     driver = test_login("Admin", "admin123")
 
-    time.sleep(5)
     driver.find_element(By.XPATH, "//a[@href='/web/index.php/buzz/viewBuzz']").click()
 
     textarea_field = WebDriverWait(driver, 10).until(
