@@ -84,6 +84,47 @@ public class Seleniumscript {
 			driver.quit();
 		}
 	}
+	
+	public static void testEditUser(WebDriver driver, WebDriverWait wait) {
+	    try {
+	        String path = "//*[@id=\"app\"]/div[1]/div[1]/aside/nav/div[2]/ul/li[1]/a";
+	        clickXpath(driver, wait, path, "Admin");
+
+	        path = "//*[@id=\"app\"]/div[1]/div[2]/div[2]/div/div[2]/div[3]/div/div[2]/div[2]/div/div[6]/div/button[2]";
+	        clickXpath(driver, wait, path, "Botão Editar");
+
+	        path = "//*[@id=\"app\"]/div[1]/div[2]/div[2]/div/div/form/div[1]/div/div[1]/div/div[2]/div/div";
+	        clickXpath(driver, wait, path, "Dropdown User Role");
+	        path = "//div[@role='listbox']/div[2]"; 
+	        clickXpath(driver, wait, path, "Selecionar Admin");
+
+	        path = "//*[@id=\"app\"]/div[1]/div[2]/div[2]/div/div/form/div[1]/div/div[3]/div/div[2]/div/div";
+	        clickXpath(driver, wait, path, "Dropdown Status");
+	        path = "//div[@role='listbox']/div[3]"; 
+	        clickXpath(driver, wait, path, "Selecionar Desabilitado");	
+	       
+	  
+	        path = "//*[@id=\"app\"]/div[1]/div[2]/div[2]/div/div/form/div[1]/div/div[5]/div/div[2]/div/label/span/i"; 
+	        clickXpath(driver, wait, path, "Trocar Senha");
+	        
+	        sleep(1000);
+			
+	        path = "//*[@id=\"app\"]/div[1]/div[2]/div[2]/div/div/form/div[2]/div/div[1]/div/div[2]/input";
+			fillInput(wait, path, "Teste123@!","Senha");
+			
+			path = "//*[@id=\"app\"]/div[1]/div[2]/div[2]/div/div/form/div[2]/div/div[2]/div/div[2]/input";
+			fillInput(wait, path, "Teste123@!","Confrimação Senha");
+
+	        path = "//*[@id=\"app\"]/div[1]/div[2]/div[2]/div/div/form/div[3]/button[2]"; 
+	        clickXpath(driver, wait, path, "Trocar Senha");
+	        
+
+			
+	    } catch (Exception e) {
+	        System.out.println("Erro ao adicionar usuário: " + e.getMessage());
+	        driver.quit();
+	    }
+	}
 
 	private static void clickCss(WebDriver driver, WebDriverWait wait,String cssSelector, String click) {
 		System.out.println("clickCss: "+click);
@@ -116,12 +157,13 @@ public class Seleniumscript {
 	}
 
 	public static void main(String[] args) {
-		System.setProperty("webdriver.chrome.driver", "D:\\apps\\Selenium\\chromedriver\\chromedriver.exe");
+		System.setProperty("webdriver.chrome.driver", "C:\\Users\\viniw\\Downloads\\chromedriver-win64\\chromedriver-win64\\chromedriver.exe");
 		WebDriver driver = new ChromeDriver();
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
 
 		testLogin(driver, wait);
 		testQualification(driver, wait);
+		testEditUser(driver, wait);
 
 		sleep(5000);
 
