@@ -35,5 +35,11 @@
 			<artifactId>selenium-java</artifactId>
 			<version>4.33.0</version>
 		</dependency>
+		<!-- WebDriver Manager -->
+		<dependency>
+			<groupId>io.github.bonigarcia</groupId>
+			<artifactId>webdrivermanager</artifactId>
+			<version>5.5.3</version> <!-- Verifique a versão mais recente -->
+		</dependency>
 	</dependencies>
 </project>

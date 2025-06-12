@@ -9,10 +9,12 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import io.github.bonigarcia.wdm.WebDriverManager;
+
 public class Seleniumscript {
 
-	public static void testLogin(WebDriver driver, WebDriverWait wait) {
-
+	public static String testLogin(WebDriver driver, WebDriverWait wait) {
+		String resultado = "";
 		try {
 			driver.get("https://opensource-demo.orangehrmlive.com/web/index.php/auth/login");
 
@@ -30,11 +32,15 @@ public class Seleniumscript {
 			
 			wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("div.oxd-topbar-header-title")));
 			System.out.println("Login realizado com sucesso!");
-
+			WebElement dashboardTitle = wait.until(
+					ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id=\"app\"]/div[1]/div[1]/header/div[1]/div[1]/span/h6")));
+			resultado = dashboardTitle.getText();
 		} catch (Exception e) {
 			System.out.println("Erro durante o login: " + e.getMessage());
 			driver.quit();
+			
 		}
+		return resultado;
 	}
 
 	public static void testQualification(WebDriver driver, WebDriverWait wait) {
@@ -154,9 +160,8 @@ public class Seleniumscript {
 	}
 
 	public static void main(String[] args) {
-		System.setProperty("webdriver.chrome.driver", "D:\\apps\\Selenium\\chromedriver\\chromedriver.exe");
-		WebDriver driver = new ChromeDriver();
-		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
+		WebDriver driver = getDriver();
+		WebDriverWait wait = getWait(driver);
 
 		testLogin(driver, wait);
 		testQualification(driver, wait);
@@ -164,9 +169,24 @@ public class Seleniumscript {
 
 		sleep(5000);
 
+		closeDriver(driver);
+	}
+
+	public static void closeDriver(WebDriver driver) {
 		if (driver != null) {
 			driver.quit();
 		}
+	}
+
+	public static WebDriverWait getWait(WebDriver driver) {
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
+		return wait;
+	}
+
+	public static WebDriver getDriver() {
+		WebDriverManager.chromedriver().setup();
+		WebDriver driver = new ChromeDriver();
+		return driver;
 	}
 
 }
