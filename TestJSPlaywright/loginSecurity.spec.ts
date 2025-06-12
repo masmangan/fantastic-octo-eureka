@@ -5,7 +5,7 @@ test.describe("Security Tests - Login Page", () => {
     "https://opensource-demo.orangehrmlive.com/web/index.php/auth/login";
 
   const maliciousInputs = [
-    "' OR '1'='1",
+    "' OR '1'='1", //SQL
     "'; DROP TABLE users; --",
     "' OR 1=1 --",
     "' OR 'a'='a",
