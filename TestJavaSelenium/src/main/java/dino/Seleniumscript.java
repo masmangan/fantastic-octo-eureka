@@ -32,6 +32,7 @@ public class Seleniumscript {
 			
 			wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("div.oxd-topbar-header-title")));
 			System.out.println("Login realizado com sucesso!");
+			
 			WebElement dashboardTitle = wait.until(
 					ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id=\"app\"]/div[1]/div[1]/header/div[1]/div[1]/span/h6")));
 			resultado = dashboardTitle.getText();
@@ -43,13 +44,18 @@ public class Seleniumscript {
 		return resultado;
 	}
 
-	public static void testQualification(WebDriver driver, WebDriverWait wait) {
+	public static int testQualification(WebDriver driver, WebDriverWait wait) {
+		int resultado = 0;
 		try {
 			String path = "//*[@id=\"app\"]/div[1]/div[1]/aside/nav/div[2]/ul/li[6]/a";
 			clickXpath(driver, wait, path, "My Info");
 
 			path = "//*[@id=\"app\"]/div[1]/div[2]/div[2]/div/div/div/div[1]/div[2]/div[9]/a";
 			clickXpath(driver, wait, path, "Qualification");
+			String pathQuantidade = "//*[@id=\"app\"]/div[1]/div[2]/div[2]/div/div/div/div[2]/div[2]/div[2]/div/span";
+			WebElement itemQualification = wait.until(
+					ExpectedConditions.visibilityOfElementLocated(By.xpath(pathQuantidade)));
+			resultado = extrairNumero(itemQualification.getText());
 
 			path = "//*[@id=\"app\"]/div[1]/div[2]/div[2]/div/div/div/div[2]/div[2]/div[1]/div/button";
 			clickXpath(driver, wait, path, "ADD Work Experience");
@@ -58,7 +64,7 @@ public class Seleniumscript {
 			fillInput(wait, path, "PUCRS","Compania");
 
 			path = "//*[@id=\"app\"]/div[1]/div[2]/div[2]/div/div/div/div[2]/div[2]/div[1]/form/div[1]/div/div[2]/div/div[2]/input";
-			fillInput(wait, path, "Gerente","Cargo");
+			fillInput(wait, path, "Gerente Admin","Cargo");
 
 			path = "//*[@id=\"app\"]/div[1]/div[2]/div[2]/div/div/div/div[2]/div[2]/div[1]/form/div[2]/div/div[1]/div/div[2]/div/div/i";
 			clickXpath(driver, wait, path, "Caledario To");
@@ -84,10 +90,15 @@ public class Seleniumscript {
 			clickXpath(driver, wait, path, "Save");
 			
 			System.out.println("Qualificação Adicionada com sucesso");
+			
+			itemQualification = wait.until(
+					ExpectedConditions.visibilityOfElementLocated(By.xpath(pathQuantidade)));
+			resultado = extrairNumero(itemQualification.getText()) - resultado;
 		} catch (Exception e) {
 			System.out.println("Erro durante Adição de Qualificação: " + e.getMessage());
 			driver.quit();
 		}
+		return resultado;
 	}
 	
 	public static void testEditUser(WebDriver driver, WebDriverWait wait) {
@@ -157,6 +168,11 @@ public class Seleniumscript {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public static int extrairNumero(String texto) {
+	    String numero = texto.replaceAll("\\D+", "");
+	    return Integer.parseInt(numero);
 	}
 
 	public static void main(String[] args) {

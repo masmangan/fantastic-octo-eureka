@@ -16,4 +16,14 @@ public class TestSelenium {
 		Seleniumscript.closeDriver(driver);
 	}
 	
+	@Test
+	@DisplayName("Teste Qualificação")
+	void testQualification() {
+		WebDriver driver = Seleniumscript.getDriver();
+		WebDriverWait wait = Seleniumscript.getWait(driver);
+		Seleniumscript.testLogin(driver, wait);
+		
+		Assertions.assertEquals( 1, Seleniumscript.testQualification(driver, wait));
+		Seleniumscript.closeDriver(driver);
+	}
 }
