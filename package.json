@@ -1,0 +1,23 @@
+{
+  "name": "fantastic-octo-eureka",
+  "version": "1.0.0",
+  "description": "Teste do software Orange HRM",
+  "main": "index.js",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/masmangan/fantastic-octo-eureka.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/masmangan/fantastic-octo-eureka/issues"
+  },
+  "homepage": "https://github.com/masmangan/fantastic-octo-eureka#readme",
+  "devDependencies": {
+    "@playwright/test": "^1.52.0",
+    "@types/node": "^22.15.29"
+  }
+}

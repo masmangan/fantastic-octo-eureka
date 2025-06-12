@@ -1,0 +1,37 @@
+import { test, expect } from '@playwright/test';
+
+test('test', async ({ page }) => {
+  var randomString = Math.random().toString(36).substring(2, 15);
+  await page.goto('https://opensource-demo.orangehrmlive.com/web/index.php/auth/login');
+  await page.getByRole('textbox', { name: 'Username' }).click();
+  await page.getByRole('textbox', { name: 'Username' }).fill('Admin');
+  await page.getByRole('textbox', { name: 'Username' }).press('Tab');
+  await page.getByRole('textbox', { name: 'Password' }).fill('admin123');
+  await page.getByRole('button', { name: 'Login' }).click();
+  await page.getByRole('link', { name: 'Claim' }).click();
+  await page.getByRole('button', { name: ' Assign Claim' }).click();
+  await page.getByRole('textbox', { name: 'Type for hints...' }).click();
+  await page.getByRole('textbox', { name: 'Type for hints...' }).fill('Gust');
+  await page.getByText('Gust Jordan Turner').click();
+  await page.getByText('-- Select --').first().click();
+  await page.getByText('Accommodation').click();
+  await page.getByText('-- Select --').click();
+  await page.getByText('Afghanistan Afghani').click();
+  await page.locator('textarea').click();
+  await page.locator('textarea').fill(randomString);
+  await page.getByRole('button', { name: 'Create' }).click();
+  await page.getByRole('button', { name: ' Add' }).first().click();
+  await page.locator('div').filter({ hasText: /^-- Select --$/ }).nth(2).click();
+  await page.getByText('Accommodation').click();
+  await page.getByRole('textbox', { name: 'yyyy-mm-dd' }).click();
+  await page.getByText('3', { exact: true }).click();
+  await page.getByRole('dialog').getByRole('textbox').nth(1).click();
+  await page.getByRole('dialog').getByRole('textbox').nth(1).fill('100');
+  await page.getByRole('dialog').getByRole('textbox').nth(1).press('Tab');
+  await page.getByRole('dialog').locator('textarea').fill(randomString);
+  await page.getByRole('button', { name: 'Save' }).click();
+  await page.getByRole('button', { name: 'Submit' }).click();
+  await page.getByRole('listitem').filter({ hasText: 'Employee Claims' }).click();
+  await expect(page.getByRole('table')).toContainText('Gust Turner');
+  await expect(page.getByRole('table')).toContainText(randomString);
+});
