@@ -9,13 +9,14 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import io.github.bonigarcia.wdm.WebDriverManager;
+
 public class Seleniumscript {
 
-	public static void testLogin(WebDriver driver, WebDriverWait wait) {
-
+	public static String testLogin(WebDriver driver, WebDriverWait wait) {
+		String resultado = "";
 		try {
 			driver.get("https://opensource-demo.orangehrmlive.com/web/index.php/auth/login");
-			// driver.manage().window().maximize();
 
 			WebElement usernameField = wait.until(
 					ExpectedConditions.visibilityOfElementLocated(By.cssSelector("input[placeholder='Username']")));
@@ -31,20 +32,30 @@ public class Seleniumscript {
 			
 			wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("div.oxd-topbar-header-title")));
 			System.out.println("Login realizado com sucesso!");
-
+			
+			WebElement dashboardTitle = wait.until(
+					ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id=\"app\"]/div[1]/div[1]/header/div[1]/div[1]/span/h6")));
+			resultado = dashboardTitle.getText();
 		} catch (Exception e) {
 			System.out.println("Erro durante o login: " + e.getMessage());
 			driver.quit();
+			
 		}
+		return resultado;
 	}
 
-	public static void testQualification(WebDriver driver, WebDriverWait wait) {
+	public static int testQualification(WebDriver driver, WebDriverWait wait) {
+		int resultado = 0;
 		try {
 			String path = "//*[@id=\"app\"]/div[1]/div[1]/aside/nav/div[2]/ul/li[6]/a";
 			clickXpath(driver, wait, path, "My Info");
 
 			path = "//*[@id=\"app\"]/div[1]/div[2]/div[2]/div/div/div/div[1]/div[2]/div[9]/a";
 			clickXpath(driver, wait, path, "Qualification");
+			String pathQuantidade = "//*[@id=\"app\"]/div[1]/div[2]/div[2]/div/div/div/div[2]/div[2]/div[2]/div/span";
+			WebElement itemQualification = wait.until(
+					ExpectedConditions.visibilityOfElementLocated(By.xpath(pathQuantidade)));
+			resultado = extrairNumero(itemQualification.getText());
 
 			path = "//*[@id=\"app\"]/div[1]/div[2]/div[2]/div/div/div/div[2]/div[2]/div[1]/div/button";
 			clickXpath(driver, wait, path, "ADD Work Experience");
@@ -53,7 +64,7 @@ public class Seleniumscript {
 			fillInput(wait, path, "PUCRS","Compania");
 
 			path = "//*[@id=\"app\"]/div[1]/div[2]/div[2]/div/div/div/div[2]/div[2]/div[1]/form/div[1]/div/div[2]/div/div[2]/input";
-			fillInput(wait, path, "Gerente","Cargo");
+			fillInput(wait, path, "Gerente Admin","Cargo");
 
 			path = "//*[@id=\"app\"]/div[1]/div[2]/div[2]/div/div/div/div[2]/div[2]/div[1]/form/div[2]/div/div[1]/div/div[2]/div/div/i";
 			clickXpath(driver, wait, path, "Caledario To");
@@ -79,10 +90,15 @@ public class Seleniumscript {
 			clickXpath(driver, wait, path, "Save");
 			
 			System.out.println("Qualificação Adicionada com sucesso");
+			
+			itemQualification = wait.until(
+					ExpectedConditions.visibilityOfElementLocated(By.xpath(pathQuantidade)));
+			resultado = extrairNumero(itemQualification.getText()) - resultado;
 		} catch (Exception e) {
 			System.out.println("Erro durante Adição de Qualificação: " + e.getMessage());
 			driver.quit();
 		}
+		return resultado;
 	}
 	
 	public static void testEditUser(WebDriver driver, WebDriverWait wait) {
@@ -129,8 +145,6 @@ public class Seleniumscript {
 	private static void clickCss(WebDriver driver, WebDriverWait wait,String cssSelector, String click) {
 		System.out.println("clickCss: "+click);
 		WebElement button = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(cssSelector)));
-		//wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(cssSelector)));
-		//WebElement loginButton = driver.findElement(By.cssSelector(cssSelector));
 		button.click();
 	}
 
@@ -155,11 +169,15 @@ public class Seleniumscript {
 			e.printStackTrace();
 		}
 	}
+	
+	public static int extrairNumero(String texto) {
+	    String numero = texto.replaceAll("\\D+", "");
+	    return Integer.parseInt(numero);
+	}
 
 	public static void main(String[] args) {
-		System.setProperty("webdriver.chrome.driver", "C:\\Users\\viniw\\Downloads\\chromedriver-win64\\chromedriver-win64\\chromedriver.exe");
-		WebDriver driver = new ChromeDriver();
-		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
+		WebDriver driver = getDriver();
+		WebDriverWait wait = getWait(driver);
 
 		testLogin(driver, wait);
 		testQualification(driver, wait);
@@ -167,9 +185,24 @@ public class Seleniumscript {
 
 		sleep(5000);
 
+		closeDriver(driver);
+	}
+
+	public static void closeDriver(WebDriver driver) {
 		if (driver != null) {
 			driver.quit();
 		}
+	}
+
+	public static WebDriverWait getWait(WebDriver driver) {
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
+		return wait;
+	}
+
+	public static WebDriver getDriver() {
+		WebDriverManager.chromedriver().setup();
+		WebDriver driver = new ChromeDriver();
+		return driver;
 	}
 
 }
