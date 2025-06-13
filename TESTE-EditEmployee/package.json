@@ -1,0 +1,11 @@
+{
+	"name": "testet2jsplaywright",
+	"version": "1.0.0",
+	"description": "Teste automatizado com Playwright no OrangeHRM",
+	"scripts": {
+		"test": "npx playwright test"
+	},
+	"devDependencies": {
+		"@playwright/test": "^1.43.1"
+	}
+}
