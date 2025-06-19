@@ -51,6 +51,8 @@ def test_view_employee_profile(driver):
         # Agora que o elemento foi encontrado realiza a asserção
         assert "John Doe" in success_message.text
 
+        return driver
+    
     except Exception as e:
         print(f"Falha ao abrir o perfil do funcionário: {e}")
 
